@@ -1,13 +1,35 @@
 <?php
-
-	class Hair {}
-	class ShortHair extends Hair {}
-	class LongHair extends Hair {}
+	interface Attribute {
+		function __toString();
+	}
+	abstract class Hair implements Attribute {}
+	class ShortHair extends Hair {
+		public function __toString() {
+			return "I have short hair.\n";
+		}
+	}
+	class LongHair extends Hair {
+		public function __toString() {
+			return "I have long hair.\n";
+		}
+	}
 	
-	class Eyes {}
-	class BrownEyes extends Eyes {}
-	class GreenEyes extends Eyes {}
-	class BlueEyes extends Eyes {}
+	abstract class Eyes implements Attribute {}
+	class BrownEyes extends Eyes {
+		public function __toString() {
+			return "I have brown eyes.\n";
+		}
+	}
+	class GreenEyes extends Eyes {
+		public function __toString() {
+			return "I have green eyes.\n";
+		}
+	}
+	class BlueEyes extends Eyes {
+		public function __toString() {
+			return "I have blue eyes.\n";
+		}
+	}
 	
 	class CatFactory {
 		private $Hair;
@@ -25,8 +47,12 @@
 			return clone $this->Eyes;
 		}
 	}
-	
-	$Factory = new CatFactory(new ShortHair(), new GreenEyes());
-	print_r($factory->getHair());
-	print_r($factory->getEyes());
+	try {
+		$Factory = new CatFactory(new ShortHair(), new GreenEyes());
+		print($Factory->getHair());
+		print($Factory->getEyes());
+	}
+	catch (Exception $e) {
+		die($e);
+	}
 ?>
